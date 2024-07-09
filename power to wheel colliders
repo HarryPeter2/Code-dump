@@ -1,0 +1,135 @@
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public class motorpower : MonoBehaviour
+{
+    [SerializeField] private WheelCollider[] AllWheels;
+    [SerializeField] private WheelCollider[] rearwheels;
+    [SerializeField] private WheelCollider[] frontwheels;
+    public Transform steeringWheel;
+    float steer = 0;
+    float power = 0;
+    float constantY = 90;
+    public float Gearnumber = 1;
+   
+
+    float maxpower = 0;
+
+    public float maxsteer = 0;
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private void braking()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            foreach (var wheelCollider in rearwheels)
+            {
+                wheelCollider.brakeTorque = power/100;
+            }
+        }
+        else
+        {
+            foreach (var wheelCollider in rearwheels)
+            {
+                wheelCollider.brakeTorque = 0;
+            }
+            gearchangepower();
+        }
+        
+
+    }
+    private void gearchangepower()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Gearnumber = Gearnumber + 1;
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Gearnumber = Gearnumber - 1;
+        }
+        if (Gearnumber == 1)
+        {
+            float maxpower = 50;
+            power = Input.GetAxis("vertical") * maxpower * Time.deltaTime * 250;
+            foreach (var wheelCollider in rearwheels)
+            {
+                wheelCollider.motorTorque = power;
+            }
+        }
+        if (Gearnumber == 2)
+        {
+            float maxpower = 70;
+            power = Input.GetAxis("vertical") * maxpower * Time.deltaTime * 250;
+            foreach (var wheelCollider in rearwheels)
+            {
+                wheelCollider.motorTorque = power;
+            }
+        }
+        if (Gearnumber == 3)
+        {
+            float maxpower = 90;
+            power = Input.GetAxis("vertical") * maxpower * Time.deltaTime * 250;
+            foreach (var wheelCollider in rearwheels)
+            {
+                wheelCollider.motorTorque = power;
+            }
+        }
+        if (Gearnumber == 4)
+        {
+            float maxpower = 105;
+            power = Input.GetAxis("vertical") * maxpower * Time.deltaTime * 250;
+            foreach (var wheelCollider in rearwheels)
+            {
+                wheelCollider.motorTorque = power;
+            }
+        }
+        if (Gearnumber == 5)
+        {
+            float maxpower = 120;
+            power = Input.GetAxis("vertical") * maxpower * Time.deltaTime * 250;
+            foreach (var wheelCollider in rearwheels)
+            {
+                wheelCollider.motorTorque = power;
+            }
+        }
+        if (Gearnumber == 6)
+        {
+            float maxpower = 135;
+            power = Input.GetAxis("vertical") * maxpower * Time.deltaTime * 250;
+            foreach (var wheelCollider in rearwheels)
+            {
+                wheelCollider.motorTorque = power;
+            }
+        }
+        
+    }
+    private void changepower()
+    {
+        
+        
+    }
+    private void steering()
+    {
+        steer = Input.GetAxis("horizontal") * maxsteer;
+        foreach (var wheelCollider in frontwheels)
+        {
+            wheelCollider.steerAngle = steer;
+        }
+
+        
+    }
+
+    
+    void Start()
+        {
+
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            
+            steering();
+            braking();
+        }
+}   
