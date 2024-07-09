@@ -9,34 +9,27 @@ public class motorpower : MonoBehaviour
     public Transform steeringWheel;
     float steer = 0;
     float power = 0;
-    float constantY = 90;
+    
     public float Gearnumber = 1;
-   
+    [Range(0, 40f)]
+    public float gear1 = 11f;
+    [Range(40f, 70f)]
+    public float gear2 = 0.2f;
+    [Range(70f, 85f)]
+    public float gear3 = 0.2f;
+    [Range(85f, 100f)]
+    public float gear4 = 0.2f;
+    [Range(100f, 110f)]
+    public float gear5 = 0.2f;
+    [Range(110f, 120000f)]
+    public float gear6 = 0.2f;
 
-    float maxpower = 0;
+
+    public float maxpower = 0;
 
     public float maxsteer = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void braking()
-    {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            foreach (var wheelCollider in rearwheels)
-            {
-                wheelCollider.brakeTorque = power/100;
-            }
-        }
-        else
-        {
-            foreach (var wheelCollider in rearwheels)
-            {
-                wheelCollider.brakeTorque = 0;
-            }
-            gearchangepower();
-        }
-        
-
-    }
+  
     private void gearchangepower()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -49,7 +42,7 @@ public class motorpower : MonoBehaviour
         }
         if (Gearnumber == 1)
         {
-            float maxpower = 50;
+            float maxpower = gear1;
             power = Input.GetAxis("vertical") * maxpower * Time.deltaTime * 250;
             foreach (var wheelCollider in rearwheels)
             {
@@ -58,7 +51,7 @@ public class motorpower : MonoBehaviour
         }
         if (Gearnumber == 2)
         {
-            float maxpower = 70;
+            float maxpower = gear2;
             power = Input.GetAxis("vertical") * maxpower * Time.deltaTime * 250;
             foreach (var wheelCollider in rearwheels)
             {
@@ -67,7 +60,7 @@ public class motorpower : MonoBehaviour
         }
         if (Gearnumber == 3)
         {
-            float maxpower = 90;
+            float maxpower = gear3;
             power = Input.GetAxis("vertical") * maxpower * Time.deltaTime * 250;
             foreach (var wheelCollider in rearwheels)
             {
@@ -76,7 +69,7 @@ public class motorpower : MonoBehaviour
         }
         if (Gearnumber == 4)
         {
-            float maxpower = 105;
+            float maxpower = gear4;
             power = Input.GetAxis("vertical") * maxpower * Time.deltaTime * 250;
             foreach (var wheelCollider in rearwheels)
             {
@@ -85,7 +78,7 @@ public class motorpower : MonoBehaviour
         }
         if (Gearnumber == 5)
         {
-            float maxpower = 120;
+            float maxpower = gear5;
             power = Input.GetAxis("vertical") * maxpower * Time.deltaTime * 250;
             foreach (var wheelCollider in rearwheels)
             {
@@ -94,7 +87,7 @@ public class motorpower : MonoBehaviour
         }
         if (Gearnumber == 6)
         {
-            float maxpower = 135;
+            float maxpower = gear6;
             power = Input.GetAxis("vertical") * maxpower * Time.deltaTime * 250;
             foreach (var wheelCollider in rearwheels)
             {
@@ -128,8 +121,8 @@ public class motorpower : MonoBehaviour
         // Update is called once per frame
         void Update()
         {
-            
+            gearchangepower();
             steering();
-            braking();
+            
         }
 }   
