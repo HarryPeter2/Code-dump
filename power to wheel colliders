@@ -1,15 +1,30 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using TMPro;
+using UnityEditor.VersionControl;
 
 public class motorpower : MonoBehaviour
 {
+
+
+    public TMP_Text gearshower;
+    public string gearstring = "";
+    private void gearshow()
+    {
+        gearshower.SetText(gearstring);
+    }
+
+
+
+
+
     [SerializeField] private WheelCollider[] AllWheels;
     [SerializeField] private WheelCollider[] rearwheels;
     [SerializeField] private WheelCollider[] frontwheels;
     public Transform steeringWheel;
     float steer = 0;
     float power = 0;
-    
+
     public float Gearnumber = 1;
     [Range(0, 40f)]
     public float gear1 = 11f;
@@ -21,7 +36,7 @@ public class motorpower : MonoBehaviour
     public float gear4 = 0.2f;
     [Range(100f, 110f)]
     public float gear5 = 0.2f;
-    [Range(110f, 120000f)]
+    [Range(110f, 120)]
     public float gear6 = 0.2f;
 
 
@@ -29,7 +44,7 @@ public class motorpower : MonoBehaviour
 
     public float maxsteer = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-  
+
     private void gearchangepower()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -40,6 +55,8 @@ public class motorpower : MonoBehaviour
         {
             Gearnumber = Gearnumber - 1;
         }
+
+
         if (Gearnumber == 1)
         {
             float maxpower = gear1;
@@ -94,12 +111,13 @@ public class motorpower : MonoBehaviour
                 wheelCollider.motorTorque = power;
             }
         }
-        
+        gearstring = Gearnumber.ToString();
+
     }
     private void changepower()
     {
-        
-        
+
+
     }
     private void steering()
     {
@@ -109,20 +127,20 @@ public class motorpower : MonoBehaviour
             wheelCollider.steerAngle = steer;
         }
 
-        
+
     }
 
-    
+
     void Start()
-        {
+    {
 
-        }
+    }
 
-        // Update is called once per frame
-        void Update()
-        {
-            gearchangepower();
-            steering();
-            
-        }
-}   
+    // Update is called once per frame
+    void Update()
+    {
+        gearchangepower();
+        steering();
+        gearshow();
+    }
+}
